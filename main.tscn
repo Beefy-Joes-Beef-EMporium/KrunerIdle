@@ -1,0 +1,162 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Screenshot_2020-10-02 krunker map - Google Search.png" type="Texture" id=1]
+[ext_resource path="res://freekrpng.png" type="Texture" id=2]
+[ext_resource path="res://KRHover.jpg" type="Texture" id=3]
+[ext_resource path="res://KRPress.jpg" type="Texture" id=4]
+[ext_resource path="res://scripts/FreeKrClicked.gd" type="Script" id=5]
+[ext_resource path="res://scripts/coinsound.gd" type="Script" id=6]
+[ext_resource path="res://scripts/KRCountert.gd" type="Script" id=7]
+[ext_resource path="res://bigfont.tres" type="DynamicFont" id=8]
+[ext_resource path="res://scripts/marketflip.gd" type="Script" id=9]
+[ext_resource path="res://font/Roboto-BoldItalic.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://scripts/AutoClicker1.gd" type="Script" id=11]
+[ext_resource path="res://scripts/CPUParticles2D.gd" type="Script" id=12]
+[ext_resource path="res://coin.wav" type="AudioStream" id=14]
+
+[sub_resource type="Curve" id=1]
+min_value = -360.0
+max_value = 360.0
+_data = [ Vector2( 0, -333.818 ), 0.0, 818.527, 0, 0, Vector2( 0.996633, 360 ), 631.8, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=2]
+max_value = 360.0
+_data = [ Vector2( 0.0050505, -360 ), 0.0, 0.0, 0, 0, Vector2( 1, 360 ), 931.5, 0.0, 0, 0 ]
+
+[sub_resource type="DynamicFont" id=3]
+size = 50
+font_data = ExtResource( 10 )
+
+[node name="Node2D" type="Node2D"]
+
+[node name="main background" type="Sprite" parent="."]
+position = Vector2( 513, 304.5 )
+scale = Vector2( 1.32092, 1.43632 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="KRButton" type="TextureButton" parent="."]
+margin_left = 46.0
+margin_top = 115.0
+margin_right = 296.0
+margin_bottom = 315.0
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 3 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="audio" type="AudioStreamPlayer" parent="KRButton"]
+stream = ExtResource( 14 )
+script = ExtResource( 6 )
+
+[node name="KRCounter" type="Label" parent="KRButton"]
+margin_left = 201.0
+margin_top = -66.0
+margin_right = 281.0
+margin_bottom = -6.0
+custom_fonts/font = ExtResource( 8 )
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+position = Vector2( 161, 188 )
+scale = Vector2( 2, 2 )
+z_index = 2
+emitting = false
+amount = 6
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 189.02
+initial_velocity_random = 0.7
+angular_velocity = 223.1
+angular_velocity_random = 1.0
+angular_velocity_curve = SubResource( 1 )
+orbit_velocity = 5.0
+orbit_velocity_random = 1.0
+radial_accel = 5.63
+radial_accel_random = 0.48
+tangential_accel_random = 0.57
+angle_random = 1.0
+angle_curve = SubResource( 2 )
+scale_amount = 22.51
+scale_amount_random = 0.57
+color = Color( 0.913725, 0.780392, 0.054902, 1 )
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 41.0
+margin_top = 48.0
+margin_right = 265.0
+margin_bottom = 117.0
+custom_fonts/normal_font = ExtResource( 8 )
+bbcode_enabled = true
+bbcode_text = "[rainbow freq=0.4 sat=10 val=15]Krunkies:[/rainbow]"
+text = "Krunkies:"
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+margin_left = 23.0
+margin_top = 11.0
+margin_right = 657.0
+margin_bottom = 47.0
+max_value = 50.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ProgressBar"]
+margin_left = 638.168
+margin_top = -14.102
+margin_right = 678.168
+margin_bottom = 45.898
+custom_fonts/font = SubResource( 3 )
+text = "0"
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="marketflip" type="Button" parent="."]
+visible = false
+margin_left = 386.0
+margin_top = 104.0
+margin_right = 507.0
+margin_bottom = 166.0
+text = "small market flip"
+clip_text = true
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="auto" type="Button" parent="."]
+margin_left = 387.429
+margin_top = 249.168
+margin_right = 504.429
+margin_bottom = 300.168
+text = "play krunker"
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="button_pressed" from="KRButton" to="KRButton/audio" method="_on_TextureButton_button_pressed"]
+[connection signal="button_pressed" from="KRButton" to="KRButton/KRCounter" method="_on_TextureButton_button_pressed"]
+[connection signal="button_pressed" from="KRButton" to="KRButton" method="_on_KRButton_button_pressed"]
+[connection signal="button_pressed" from="KRButton" to="CPUParticles2D" method="_on_KRButton_button_pressed"]
+[connection signal="BuyAuto1" from="auto" to="KRButton/KRCounter" method="_on_auto_BuyAuto1"]
